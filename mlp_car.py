@@ -133,6 +133,7 @@ def main():
         }
         for cfg in configs
     ]
+    # Histórico
     configs_path = BASE_DIR / "configs_runs.json"
     historico_acumulado = []
     if configs_path.exists():
@@ -142,7 +143,6 @@ def main():
         except Exception:
             historico_acumulado = []
 
-    # Preserva o histórico acumulado: adiciona novas runs e atualiza existentes pelo identificador
     configs_por_identificador = {c.get("nome", c.get("slug")): c for c in historico_acumulado}
     for c in configs_completas:
         identificador = c.get("nome", c.get("slug"))
