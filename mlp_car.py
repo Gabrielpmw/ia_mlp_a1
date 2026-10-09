@@ -134,8 +134,24 @@ def main():
         for cfg in configs
     ]
     configs_path = BASE_DIR / "configs_runs.json"
+    historico_acumulado = []
+    if configs_path.exists():
+        try:
+            with open(configs_path, "r", encoding="utf-8") as f:
+                historico_acumulado = json.load(f)
+        except Exception:
+            historico_acumulado = []
+
+    # Preserva o histórico acumulado: adiciona novas runs e atualiza existentes pelo identificador
+    configs_por_identificador = {c.get("nome", c.get("slug")): c for c in historico_acumulado}
+    for c in configs_completas:
+        identificador = c.get("nome", c.get("slug"))
+        configs_por_identificador[identificador] = c
+
+    lista_final_configs = list(configs_por_identificador.values())
+
     with open(configs_path, "w", encoding="utf-8") as f:
-        json.dump(configs_completas, f, indent=2, ensure_ascii=False)
+        json.dump(lista_final_configs, f, indent=2, ensure_ascii=False)
 
     for cfg in configs:
         with mlflow.start_run(run_name=cfg["nome"]):
