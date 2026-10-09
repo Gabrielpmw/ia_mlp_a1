@@ -123,9 +123,19 @@ def main():
     melhor_nome = ""
     historico_runs = {}
 
+    configs_completas = [
+        {
+            **cfg,
+            "epocas": EPOCHS,
+            "semente": SEED,
+            "split": "Estratificado 60/20/20",
+            "arquitetura": "Linear(16)->ReLU->Drop->Linear(4)",
+        }
+        for cfg in configs
+    ]
     configs_path = BASE_DIR / "configs_runs.json"
     with open(configs_path, "w", encoding="utf-8") as f:
-        json.dump(configs, f, indent=2, ensure_ascii=False)
+        json.dump(configs_completas, f, indent=2, ensure_ascii=False)
 
     for cfg in configs:
         with mlflow.start_run(run_name=cfg["nome"]):
