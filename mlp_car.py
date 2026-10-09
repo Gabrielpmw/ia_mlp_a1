@@ -123,6 +123,10 @@ def main():
     melhor_nome = ""
     historico_runs = {}
 
+    configs_path = BASE_DIR / "configs_runs.json"
+    with open(configs_path, "w", encoding="utf-8") as f:
+        json.dump(configs, f, indent=2, ensure_ascii=False)
+
     for cfg in configs:
         with mlflow.start_run(run_name=cfg["nome"]):
             # Tracking de Parâmetros
@@ -198,6 +202,7 @@ def main():
             torch.save(melhor_estado_run, caminho_modelo)
             mlflow.log_artifact(caminho_modelo)
             mlflow.log_artifact(str(BASE_DIR / "resumo_prep.json"))
+            mlflow.log_artifact(str(configs_path))
             mlflow.log_artifact(grafico_path)
 
             # Verificar se é o vencedor global (para o Teste Final)

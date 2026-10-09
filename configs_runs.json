@@ -1,0 +1,38 @@
+[
+  {
+    "nome": "Run 1 - Modelo Base",
+    "slug": "run_1_base",
+    "lr": 0.01,
+    "l2": 0.0,
+    "drop": 0.0,
+    "epocas": 300,
+    "semente": 33,
+    "split": "Estratificado 60/20/20",
+    "arquitetura": "Linear(16)->ReLU->Drop->Linear(4)",
+    "ideia": "Comportamento natural da rede sem restrições de L2 ou Dropout."
+  },
+  {
+    "nome": "Run 2 - Modelo Regularizado",
+    "slug": "run_2_regularizado",
+    "lr": 0.01,
+    "l2": 1e-05,
+    "drop": 0.0,
+    "epocas": 300,
+    "semente": 33,
+    "split": "Estratificado 60/20/20",
+    "arquitetura": "Linear(16)->ReLU->Drop->Linear(4)",
+    "ideia": "Controlo de magnitude dos pesos através de regularização L2."
+  },
+  {
+    "nome": "Run 3 - Modelo Otimizado",
+    "slug": "run_3_otimizado",
+    "lr": 0.01,
+    "l2": 1e-05,
+    "drop": 0.2,
+    "epocas": 300,
+    "semente": 33,
+    "split": "Estratificado 60/20/20",
+    "arquitetura": "Linear(16)->ReLU->Drop->Linear(4)",
+    "ideia": "Resiliência contra co-adaptação e atalhos usando L2 e Dropout de 20%."
+  }
+]
